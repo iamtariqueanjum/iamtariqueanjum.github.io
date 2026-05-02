@@ -3,80 +3,402 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tarique | Portfolio</title>
+  <title>Tarique Anjum — Backend Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b0b0b;
+      --surface: #141414;
+      --border: #1f1f1f;
+      --text: #d9d9d9;
+      --muted: #5a5a5a;
+      --accent: #e8e8e8;
+      --highlight: #c8f0a0;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      padding: 0;
-      font-family: "Inter", sans-serif;
-      background: #0d0d0d;
-      color: #e3e3e3;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Layout ── */
+    .shell {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 32px 120px;
+    }
+
+    /* ── Fade-in ── */
+    .fade { opacity: 0; transform: translateY(14px); animation: rise 0.6s ease forwards; }
+    .fade:nth-child(1) { animation-delay: 0.05s; }
+    .fade:nth-child(2) { animation-delay: 0.15s; }
+    .fade:nth-child(3) { animation-delay: 0.25s; }
+    .fade:nth-child(4) { animation-delay: 0.35s; }
+    .fade:nth-child(5) { animation-delay: 0.45s; }
+    .fade:nth-child(6) { animation-delay: 0.55s; }
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Header ── */
+    header { margin-bottom: 72px; }
+
+    .name {
+      font-family: var(--mono);
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    .role {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--highlight);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .bio {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.75;
+    }
+
+    .links {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
+      gap: 20px;
+      margin-top: 24px;
     }
 
-    .container {
-      max-width: 650px;
-      padding: 20px;
-      animation: fadein 1.6s ease-out forwards;
-      opacity: 0;
-    }
-
-    h1 {
-      font-size: 48px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      animation: float 4s ease-in-out infinite;
-    }
-
-    p {
-      font-size: 20px;
-      color: #bfbfbf;
-      margin: 10px 0;
-    }
-
-    a {
-      color: #58a6ff;
-      font-weight: bold;
+    .links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
       text-decoration: none;
-      transition: 0.2s;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
     }
 
-    a:hover {
-      color: #8cc6ff;
+    .links a:hover { color: var(--highlight); border-color: var(--highlight); }
+
+    /* ── Section ── */
+    section { margin-bottom: 64px; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    /* Fade In */
-    @keyframes fadein {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
 
-    /* Subtle floating effect */
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-      100% { transform: translateY(0); }
+    /* ── Work ── */
+    .job { margin-bottom: 40px; }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .job-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .job-period {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .job-company {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--highlight);
+      margin-bottom: 14px;
+    }
+
+    .job-bullets { list-style: none; }
+
+    .job-bullets li {
+      font-size: 14px;
+      color: var(--muted);
+      padding-left: 16px;
+      position: relative;
+      margin-bottom: 7px;
+      line-height: 1.65;
+    }
+
+    .job-bullets li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--border);
+    }
+
+    .job-bullets li strong {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    /* ── Projects ── */
+    .project {
+      border: 1px solid var(--border);
+      padding: 20px 22px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .project:hover { border-color: #333; }
+
+    .project-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .project-stack {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--highlight);
+      margin-bottom: 10px;
+    }
+
+    .project-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── Skills ── */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .skill-row {
+      display: contents;
+    }
+
+    .skill-row > * {
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+
+    .skill-row:last-child > * { border-bottom: none; }
+
+    .skill-cat {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding-right: 16px;
+    }
+
+    .skill-vals {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    /* ── Awards ── */
+    .award {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .award:last-child { border-bottom: none; }
+
+    .award::before {
+      content: '★';
+      color: var(--highlight);
+      font-size: 10px;
+    }
+
+    /* ── Education ── */
+    .edu-name {
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 400;
+      margin-bottom: 2px;
+    }
+
+    .edu-detail {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
     }
   </style>
 </head>
-
 <body>
-  <div class="container">
-    <h1>Hi, I'm Tarique 👋</h1>
-    <p>Backend Engineer @ MoEngage</p>
-    <p>Crafting scalable systems & AI-driven developer automations.</p>
-    <p>Currently building with FastAPI, queues, workers & LLM agents.</p>
-    <p>
-      <a href="https://github.com/iamtariqueanjum">GitHub</a> •
-      <a href="https://www.linkedin.com/in/mohammad-tarique-anjum">LinkedIn</a>
-    </p>
-  </div>
+  <main class="shell">
+
+    <header class="fade">
+      <div class="name">Mohammad Tarique Anjum</div>
+      <div class="role">Backend Engineer</div>
+      <p class="bio">
+        Crafting scalable systems and AI-driven developer automations.
+        Building with FastAPI, queues, workers &amp; LLM agents.
+      </p>
+      <div class="links">
+        <a href="https://github.com/iamtariqueanjum" target="_blank">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/mohammad-tarique-anjum" target="_blank">LinkedIn ↗</a>
+        <a href="mailto:mohammadtariqueanjum@gmail.com">Email ↗</a>
+      </div>
+    </header>
+
+    <!-- Work -->
+    <section class="fade">
+      <div class="section-label">Experience</div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Software Engineer</span>
+          <span class="job-period">Apr 2023 – Oct 2025</span>
+        </div>
+        <div class="job-company">MoEngage · Bangalore</div>
+        <ul class="job-bullets">
+          <li>Designed <strong>Templates APIs</strong> in the critical path of <strong>2.5B+ push, 250M emails and 20M WhatsApp</strong> messages daily, handling 1,000 req/sec peak across 20+ languages.</li>
+          <li>Built <strong>Template Management System</strong> from scratch across 6 channels — Push, Email, SMS, In-App, On-Site, WhatsApp — with folder org, rate-limiting, caching &amp; DB optimisations.</li>
+          <li>Reduced <strong>Content API latency by 90%</strong> (2s → 200ms) via Redis in-memory caching with TTL-based invalidation.</li>
+          <li>Developed <strong>Campaign Audience Limit</strong> preventing billions of wasted messages monthly across 1,300+ enterprise clients.</li>
+          <li>Built <strong>Dynamic Content Builder</strong> eliminating 100% of Jinja syntax errors, boosting marketer productivity 30%.</li>
+          <li>Led <strong>Python 2 → 3</strong> and <strong>MongoDB 4.0 → 4.4</strong> migrations as cross-functional POC across 6+ services with zero downtime.</li>
+          <li>Reduced PagerDuty / Sentry alert noise by <strong>75%</strong> (20 → 5 alerts/week) through systematic alert tuning.</li>
+          <li>Mentored two interns; drove code quality across a 20-member team via code reviews, pep8 &amp; unit test coverage.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Software Engineer Intern</span>
+          <span class="job-period">May 2022 – Mar 2023</span>
+        </div>
+        <div class="job-company">MoEngage · Bangalore</div>
+        <ul class="job-bullets">
+          <li>Published Python SDK <strong>moe-inform-client</strong> on PyPI with <strong>7,600+ downloads</strong> enabling developers to tap into MoEngage Inform's 3B+ daily transactional messaging.</li>
+          <li>Unified AWS &amp; Azure deployments into a single CI/CD pipeline, eliminating dual-branch overhead and achieving <strong>2× release velocity</strong>.</li>
+          <li>Implemented <strong>PII Masking</strong> across user attributes and event data with auto-masking in dashboards and previews.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="fade">
+      <div class="section-label">Projects</div>
+
+      <div class="project">
+        <div class="project-name">Review Pilot</div>
+        <div class="project-stack">LangChain · OpenAI API · Qdrant · Celery</div>
+        <p class="project-desc">
+          An AI-powered GitHub App (webhook-driven) that auto-triggers on PR events, delivering codebase-aware code reviews via a LangChain + Qdrant RAG pipeline.
+          Supports a conversational feedback loop through an inline PR comment chatbot.
+        </p>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="fade">
+      <div class="section-label">Technologies</div>
+      <div class="skill-grid">
+        <div class="skill-row">
+          <div class="skill-cat">Languages</div>
+          <div class="skill-vals">Python, Java, Go, C++, JavaScript</div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat">Frameworks</div>
+          <div class="skill-vals">Django, FastAPI, Celery, Spring Boot, Node.js</div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat">Databases</div>
+          <div class="skill-vals">MongoDB, Redis, PostgreSQL, MySQL, OracleDB</div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat">Cloud</div>
+          <div class="skill-vals">AWS, Azure, GCP</div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat">DevOps</div>
+          <div class="skill-vals">Docker, Kubernetes, Jenkins, ArgoCD, Grafana, Sentry</div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat">AI / LLM</div>
+          <div class="skill-vals">LangChain, LangGraph, OpenAI API, Qdrant, ChromaDB</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Awards -->
+    <section class="fade">
+      <div class="section-label">Recognition</div>
+      <div class="award">Rockstar Award — MoEngage</div>
+      <div class="award">Shortlisted · Google Cloud Agentic AI Day 2025 Hackathon</div>
+    </section>
+
+    <!-- Education -->
+    <section class="fade">
+      <div class="section-label">Education</div>
+      <div class="edu-name">KL University · B.Tech in Computer Science</div>
+      <div class="edu-detail">CGPA 8.85 / 10.00 · Vaddeswaram, Guntur · 2023</div>
+    </section>
+
+    <footer class="fade">
+      mohammadtariqueanjum@gmail.com ·
+    </footer>
+
+  </main>
 </body>
 </html>
-
